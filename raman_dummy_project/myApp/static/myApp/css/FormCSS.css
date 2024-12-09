@@ -1,0 +1,43 @@
+
+    h2 {
+  font-size: 24px;
+  margin:30px 0px;
+}
+label {
+  font-size: 12px;
+}
+.label-margin-zero{
+  margin:0px !important;
+  font-weight:800;
+}
+.address-form{
+  padding:20px;
+} 
+.address-form label {
+  color: #666;
+  font-weight:600;
+}
+.form-control-custom{
+  border: none !important;
+  border-bottom: 1px solid #ccc !important;
+  padding: 6px 0px;
+  margin:6px 0px 12px 0px;
+  opacity: 0.8;
+  font-size:14px;
+}
+.form-control-custom:focus {
+  border-bottom-color: #c74032 !important;
+  box-shadow: none;
+  outline: 0;
+}
+.btn-form{
+  margin-top: 40px;  background: linear-gradient(#6750b9,  #3316b4);
+  font-size: 14px;
+  color: #fff;
+}
+.btn-form:focus {
+  box-shadow: none;
+}
+input:placeholder-shown {
+  font-size: 12px;
+}

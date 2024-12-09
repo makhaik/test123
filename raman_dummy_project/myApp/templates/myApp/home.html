@@ -1,0 +1,136 @@
+{% extends 'myApp/base.html' %}
+
+{% block Content%}
+
+<div class="form-resume m-4" style="box-shadow:1px 1px 7px #aaa">    
+    <form class="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="text-center" style="margin: 2rem;">
+            <h3 class="text-center"> Add Resume Form ?</h3>
+            <small>A template for submitting personal, educational, and professional information to create a comprehensive resume.</small>    
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="border-right: 1px solid #eee;">
+                <div class="row">
+                    <div class="col-md-12">      
+                        <label for="Expertise-info" class="label-margin-zero">Personal Information</label>
+                        <h6 style="font-size:10px;">Personal information about person.</h6>                                      
+                        <div class="row">            
+                        <div class="form-group col">
+                            <label for="firstname-info" class="label-margin-zero">First Name</label>
+                            <input type="text" name="firstname" required class="form-control-custom  form-control" id="firstname-info" placeholder="First Name">
+                            </div>                              
+                        <div class="form-group col">     
+                            <label for="lastname-info" class="label-margin-zero">Last Name</label>
+                            <input type="text" name="lastname" required class="form-control-custom form-control" id="lastname-info" placeholder="Last Name">
+                            </div>                              
+                        </div>
+                        <div class="row">
+                        <div class="form-group col">
+                            <label for="contact-info" class="label-margin-zero">Contact Number</label>
+                            <input type="number" name="mobileNumber"  class="form-control-custom form-control" id="contact-info" placeholder="Mobile Number">
+                        </div>                            
+                        <div class="form-group col">
+                            <label for="Email-info" class="label-margin-zero">Email</label>
+                            <input type="email" name="email" class="form-control-custom form-control " id="Email-info" placeholder="Email">
+                          </div>
+                          </div>
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="description-info" class="label-margin-zero">Description</label>
+                                <textarea class="form-control" name="description" id="description-info" ></textarea>
+                            </div>
+                        </div>                  
+                    
+                </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="border-right: 1px solid #eee;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                            <label for="Expertise-info" class="label-margin-zero">Expertise</label>
+                            <h6 style="font-size:10px;">It refers to specialized knowledge, skills, and experience in a particular field.</h6>                            
+                        </div>
+                        <div class="col-lg-12">
+                                <button id="rowAdder" type="button" class="col-md-2 btn btn-outline-primary btn-sm">New <i class="fa fa-plus" aria-hidden="true"></i></button>                            
+                            <div id="newinput"></div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" >
+             <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                    <div class="col-lg-12 col mb-2">
+                        <label for="Expertise-info" class="label-margin-zero">Key Skills</label>
+                        <h6 style="font-size:10px;">Add skills here that has been used.</h6>                                      
+                        <div class="row">
+                            <div class="form-group col">
+                                <input type="text" name="keyskill_title" class="keyskill_title form-control m-input" style="font-size:12px ;" placeholder="Title e.g. Agile Framework">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" name="keyskill_descriptions" class="keyskill_descriptions form-control m-input" style="font-size:12px ;" placeholder="Description e.g.	Agile Framework">
+                            </div>
+                           <button id="SaveKeySkill" type="button" class="col-md-2 btn btn-outline-primary btn-sm" (click)="addSkill()">Add</button>
+                        </div>
+                        <div class="row m-1" style="font-size: 11px;">
+                            <table class="table table-striped mt-3" name="keyskilstable">
+                                <th>Title</th>
+                                <th>Descriptiop</th>
+                                <tbody id="keyskills-tbody" class="keyskills-tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="form-group col">
+                        <label for="experience-info" class="label-margin-zero">Experience Info</label>
+                        <textarea class="form-control" id="experience-info"></textarea>
+                    </div>
+                </div> -->
+            </div>
+           
+          </div>
+        </div>
+        </div>
+        <div class="" style="margin: .1rem;text-align: right;">    
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
+            <button  class="btn btn-outline-primary btn-block">Cancel</button>
+        </div>              
+    </form>     
+</div>
+<script type="text/javascript">    
+    newRowAdd =`<div id="add-expertise" class="row add-expertise">
+                                        <div class="input-group pt-2">
+                                            <input type="text" name="expertise_descriptions" class="form-control m-input" placeholder="description here ...">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-outline-secondary DeleteRow"  type="button">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button> 
+                                            </div>
+                                        </div>
+                                    </div>`;
+
+    $("#rowAdder").click(function(){
+        $('#newinput').append(newRowAdd);
+    });
+    $("#SaveKeySkill").on('click',function(){
+      var title= $(this).parent('.row').find('.keyskill_title').val(); 
+      description = $(this).parent('.row').find('.keyskill_descriptions').val();
+      if(title.length >0 && description.length >0 )
+      {
+        var grid = `<tr><td>${title}</td>
+                  <td>${description}</td></tr>`;
+          $("#keyskills-tbody").append(grid);
+      }
+    });  
+    $("body").on("click", ".DeleteRow", function () {
+        $(this).parents("#add-expertise").remove();
+    });
+</script>
+
+{% endblock %}
+
